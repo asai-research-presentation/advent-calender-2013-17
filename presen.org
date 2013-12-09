@@ -1,4 +1,5 @@
-#+title: Yet Another Org-mode Presentation Script
+# -*- truncate-lines : t -*-
+#+title: 一階述語論理ベースのプランニング と lisp
 #+author: Masataro Asai
 #+OPTIONS:   H:4 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:nil pri:nil tags:not-in-toc skip:nil
@@ -12,227 +13,137 @@
 #+HTML_HEAD: <script type="text/javascript" src="./code.js"></script>
 #+HTML_POSTAMBLE: nil
 
-#+HTML_HEAD: <a href="https://github.com/guicho271828/another-org-info"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
-
 #+LINK: img file:img/%s
 #+LINK: png file:img/%s.png
 #+LINK: svg file:img/%s.svg
 #+LINK: jpg file:img/%s.jpg
 
-
-
 #+BEGIN_outline-text-1
-#+BEGIN_XLARGE
 #+BEGIN_CENTER
-To Start Press "n"
-#+END_CENTER
-#+END_XLARGE
 
-#+BEGIN_CENTER
-*WARN* Turn off your custom keyboard shortcuts
-#+END_CENTER
+[[http://qiita.com/advent-calendar/2013/lisp][Lisp Advent Calender 2013]] day 17
 
-#+BEGIN_NOTE
-#+BEGIN_ALIGNRIGHT
-Made by guicho2.71828 (Masataro Asai)
-#+END_ALIGNRIGHT
-#+END_NOTE
+書いた人: guicho2.71828 (浅井 政太郎)
+Special Thanks: Alex福永 先生
+
+知っている方なら、内容に過度な期待はしないでください。
+よろしくおねがいします。
+
+Press "n" to proceed
+Keyboard Help: [[http://guicho271828.github.io/another-org-info/][another-org-info @ github]]
+
+#+END_CENTER
 #+END_outline-text-1
 
-* What Is It?
+* 
 
-#+BEGIN_XLARGE
-An Alternative to
-#+BEGIN_CENTER
-Org-based Presentation
-#+END_CENTER
-#+BEGIN_ALIGNRIGHT
-Method
-#+END_ALIGNRIGHT
-#+END_XLARGE
+この記事は今M1の自分の研究内容の紹介みたいなものです。
+しかも自分はこの分野に入ってまだ半年ぐらい。
+理解が足りず間違っている箇所があってもご勘弁を・・・。
 
-#+BEGIN_CENTER
-Proceed with "n"
-#+END_CENTER
+さて。
 
-* Usage (on browsers)
-
-#+BEGIN_SMALLER
-+ n :: go to the next section/expand a list
-+ p :: back to the previous section
-+ s, or "go" :: jump to an arbitrary section (using minibuffer)
-+ d :: debugging mode (shows content border)
-+ <Ctrl-g> or <Esc> :: cancel current key strokes
-
-#+END_SMALLER
-
-* Usage (on emacs)
-
-1. clone [[https://github.com/guicho271828/another-org-info][our repo]]
-
-2. run =(org-html-export-as-html)= to publish
-
-3. show it on your browser!
-
-* Virtue
-
-+ Simplicity
-  + =code.js= only has 200 lines
-+ Extensibility
-  + you can write your own extension and its easy
-  + set a function to =keyManager.<your-key-strokes>=
-  + any char code $c$ in the keystrokes must be $32 < c < 126$
-    + =Space,!,",...A,B,C,...x,y,z,{,|,~=
-+ LICENSE
-  + GPLv3 ?? < not attatched a lisence yet
-
-* Example: Expanding a List
-
-+ *the dots* tell "/here are more contents/" $\rightarrow$
-+ *an arrow* tells "/here are expandable contents/" $\rightarrow$
-  + These remind you that there are
-  + *still more sub-contents* you have to talk
-  + and where it ends
-+ list
-+ list
-
-* Org-block templates
-
-=another-org-info= knows are:
-
-+ <S -- smaller
-+ <lar -- larger
-+ <t -- twocolumn
-  + implemented using a part of CSS in [[http://getbootstrap.com/][twitter-bootstrap]]
-+ <n -- footnote
-+ <r -- float right
-+ <ar -- align right
-+ <lcr -- "left,center,right" format with x-large fonts
-+ <E -- latex `equation' environment
-+ still more...
-
-** copy-paste it
-
-to your =.emacs=
-
-#+BEGIN_CENTER
-[[file:config.el]]
-#+END_CENTER
-
-* Dependency
-<<dependency>>
-
-+ jQuery 1.10.2 (included)
-+ org-mode v8.1 (not presicely)
-
-** Utility
-
-+ ./make-periotically.sh [args]
-  + Watches the changes in the directory and =make=
-  + A simple shell script
-  + all arguments are passed to =make=
-  + dependency : inotifywait, notify-send
-
-* Test
-
-+ [[http://www.google.com][Link]]
-+ This
-+ Is
-+ A Test
-
-Mathjax formula:
-
-\[
- E=mc^2
-\]
-
-\begin{equation}
- E=mc^2 + \frac{1}{2} mv^2
-\end{equation}
-
-** Twocolumn Test
-
-#+BEGIN_CONTAINER-FLUID
-#+BEGIN_ROW-FLUID
-#+BEGIN_SPAN6
-+ HOOA!
-+ *HOOA!*
-+ HOOA!
-#+END_SPAN6
-#+BEGIN_SPAN6
-This is a LISP ALIEN IN A CAGE!
-
-[[img:alien.svg]]
-#+END_SPAN6
-#+END_ROW-FLUID
-#+END_CONTAINER-FLUID
-
-* A Slide with Too Little Contents
-
-#+BEGIN_CENTER
-#+BEGIN_SMALLER
-Hi, I'm small!
-#+END_SMALLER
-#+END_CENTER
+昨今、他の言語がweb系の技術で躍進している傍ら、
+数多のLisper達が、他言語に遅れをとっては居られないと
+(特にライブラリ面で)動きを加速させている感じがあります。
+quicklispが出てきたから^* ですかね。
 
 #+BEGIN_NOTE
-See the headline is correctly adjusted
+(*) なお自分が大学一年の時(2009)は、まだasdf-installしかありませんでした。
 #+END_NOTE
 
-* Left-Center-Right template
+* 
 
 #+BEGIN_XLARGE
-x-large left
+でも とはいえ
 #+BEGIN_CENTER
-centered
+Lisp の本命は人工知能です。
 #+END_CENTER
-#+BEGIN_ALIGNRIGHT
-right
-#+END_ALIGNRIGHT
 #+END_XLARGE
 
+人工知能の分野は1960年あたりにできた
+まだ始まって50年ちょっとの若い分野です。
+
+できたばかりの人工知能の分野の中心で、
+Lisp は John McCarthyによって考えだされ、
+また Guy L. Steele, Jr によって生みだされたのでした。
+
+* Lisp の はじまり
+
+#+BEGIN_CENTER
+AI Memo 8
+
+McCarthy, J.
+[[http://dspace.mit.edu/handle/1721.1/6096][Recursive functions of symbolic expressions and their computation by machine]]
+/Communications of the ACM/, 1959
+#+END_CENTER
+
+時代背景:
+
+1. プログラムはパンチカード式
+2. FORTRAN 登場は 1956年 ALGOL 登場は 1958年
+3. 計算資源に触れることができた人間は全世界でもひとにぎり
+
+* 人工知能: 前日譚
+
+その経緯は以下に詳しい。(読むか、あるいは、福永研のゼミに参加するという手もあります)
+
+#+BEGIN_CENTER
+McCarthy,J.  [[http://scholar.google.co.jp/scholar?q%3DHistory%2Bof%2BLisp%2BJ%2BMcCarthy&btnG%3D&hl%3Den&as_sdt%3D0%252C5][History of Lisp]] 1978
+#+END_CENTER
+
+読めばわかります。(あるいは、ゼミに(略))
+
+#+BEGIN_CENTER
+1959年, the Dartmouse Summer Research Project on Artificial Intelligence
+#+END_CENTER
+
+通称Dartmouse会議。
+このミーティングこそが、
+「人工知能」という分野(言葉?)が始めて誕生した瞬間です。
+
+会議に参加したMcCarthy は、この時点で、
+*Advice Taker* (Programs with Common Sense, 1958) という
+仮想的な(未実装の)プログラムを用いて、
+「強い知能プログラムの満たすべき条件」の草案を提唱していました。
+
+また、同じく参加していた Herbert Simon, Newell, Shaw らは、
+1956年に Logic Theorist^* とよばれる最初の自動定理証明機を作り上げていました。
+この論文は、「ヒューリスティック」という概念の強力さを
+始めて提唱した論文でもあります。
+
 #+BEGIN_NOTE
-This is a footnote
+*) A Newell, JC Shaw, HA Simon /Empirical explorations of the logic theory machine: a case study in heuristic/ 1956
 #+END_NOTE
 
-* TODOs
+* 一階述語論理
 
 
-#+BEGIN_CONTAINER-FLUID
-#+BEGIN_ROW-FLUID
-#+BEGIN_SPAN6
-#+BEGIN_SMALLER
-+ Features
-  + Table of contents
-  + =<dl>= does not expand
-  + +Showing current keystrokes+ *DONE*
-  + auto-scroll/auto-zoom with big contents
-  + Showing current/total page number
-  + Changing Stylesheet
-  + Up-Section command
-  + Slide thumbnail
-  + stopwatch/countdown timer
-  + link to #section
-#+END_SMALLER
-#+END_SPAN6
-#+BEGIN_SPAN6
-#+BEGIN_SMALLER
-+ Features inspired by other tools
-  + Content Search (in org-infojs)
-  + Drawing mode (in [[http://code.google.com/p/jessyink/][jessyink]])
-  + 'Paused' mode (in [[http://lab.hakim.se/reveal-js/#/][reveal.js]])
-  + Export to PDF (also in reveal.js)
-  + Slide with an image covering entire background (slideshare)
-  + present one paragraph/word/letter at a time
-    + those in [[http://docutils.sourceforge.net/docs/user/slide-shows.s5.html][s5]]
-+ Implementation
-  + "C-M-x" style notation in the command definition
-  + [[https://github.com/davazp/jscl][Common Lisp REPL on browser!]]
-  + complete rewrite with CL
-#+END_SMALLER
-#+END_SPAN6
-#+END_ROW-FLUID
-#+END_CONTAINER-FLUID
+* 定理証明
+
+定理証明とは、
+
++ 前提から
++ 公理を順に適用して行って
++ 結論を導く
+
+ことです。
+
+* プランニング と STRIPS表現
 
 
+* PDDL
+
+
+* 探索
+
+
+* SPACE-Hard
+
+convert to SAT
+
+* プログラム例
+
+
+http://www4.ncsu.edu/~stamant/simple-planners/simple-planners.html
 
