@@ -26,8 +26,9 @@
 書いた人: guicho2.71828 (浅井 政太郎)
 Special Thanks: Alex福永 先生
 
-知っている方なら、内容に過度な期待はしないでください。
-よろしくおねがいします。
++ 知っている方なら、内容に過度な期待はしないでください。
++ コンピュータサイエンス学科の人なら習ってるはず(?)
++ よろしくおねがいします。
 
 Press "n" to proceed
 Keyboard Help: [[http://guicho271828.github.io/another-org-info/][another-org-info @ github]]
@@ -82,7 +83,8 @@ McCarthy, J.
 
 1. プログラムはパンチカード式
 2. FORTRAN 登場は 1956年 ALGOL 登場は 1958年
-3. 計算資源に触れることができた人間は全世界でもひとにぎり
+3. 「リスト構造」の発明 1957年
+4. 計算資源に触れることができた人間は全世界でもひとにぎり
 
 * 人工知能: 前日譚
 
@@ -115,6 +117,73 @@ McCarthy,J.  [[http://scholar.google.co.jp/scholar?q%3DHistory%2Bof%2BLisp%2BJ%2
 #+BEGIN_NOTE
 *) A Newell, JC Shaw, HA Simon /Empirical explorations of the logic theory machine: a case study in heuristic/ 1956
 #+END_NOTE
+
+* Simon, Newell, Shaw: Logic Theory Machine
+
+５つの演算子 /Connective/
+
+: not, or, implies, and, 
+
+combined into more complicated expressions
+
+: (p implies not-p) implies not-p
+
+and there are 5 given axioms(公理) in /Principia Mathematica/
+
+: (p or p) implies p
+: p implies (q or p)
+: (p or q) implies (q or p)
+: [p or (q or r)] implies [q or (p or r)]
+: (p implies q) implies [(r or p) implies (r or q)]
+
+* ３つの操作 substitution, replacement, detachment
+
+1. substitution
+
+: p implies (q or p)
+
+=p= に =(q or p)= を代入して
+
+: (p or q) implies [q or (p or q)]
+
+2. replacement
+
+or と implies をいれかえられる
+
+=p implies (q or p)= <-> =not-p or (q or p)=
+
+3. detachment
+
+=A= と =A implies B= が定理(または公理)ならば =B= も定理
+
+Logic Theorist には、入力として「証明したい定理」を与えます。
+LTは、先程述べた５つの公理に"様々な順で"上の３つの操作を適用することを
+試します。入力として与えられた定理が求められれば、そこに至るまでに必要
+だった操作を "Print out" します。 /当時はディスプレイなんてなかったの
+で、本当に紙にプリントします。/ 
+
+* ヒューリスティクス
+
+この論文の貢献は、いろいろあると思いますがとにかく無茶苦茶すごくて、
+まず、「計算機は定理証明をできる」と示した(初めて?)のがスゴイ。
+/Principia Mathematica/ の結構な数の定理を、50年前のコンピュータで証明
+させています。
+
+しかも「定理証明はグラフ探索みたいなものだ！」とわかる。
+
+#+BEGIN_RIGHT
+[[img:lt.png]]
+#+END_RIGHT
+
+さらに、そうしたら、「探索が進むに連れてノードの数が爆発する」ことを発
+見するわけです。
+これは、ノードごとに、適用できる定理の数が複数あるので、
+ノードの数が倍々でどんどん増えて行ってしまうからです。
+
+#+BEGIN_RIGHT
+[[img:lt2]]
+#+END_RIGHT
+
 
 * 一階述語論理
 
