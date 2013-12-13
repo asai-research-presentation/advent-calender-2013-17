@@ -5,7 +5,7 @@
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:nil pri:nil tags:not-in-toc skip:nil
 #+infojs_opt: view:nil path:./org-info.js toc:nil ltoc:nil ftoc:nil
 #+infojs_opt: mouse:#eeeeee buttons:nil
-#+HTML_MATHJAX: path:"mathjax/MathJax.js"
+#+HTML_MATHJAX: path:"http://cdn.mathjax.org/mathjax/latest/MathJax.js"
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="animation.css" />
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="colors-and-fonts.css" />
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
@@ -23,20 +23,25 @@
 
 [[http://qiita.com/advent-calendar/2013/lisp][Lisp Advent Calender 2013]] day 17
 
-書いた人: guicho2.71828 (浅井 政太郎)
-Special Thanks: Alex福永 先生
-
 + 知っている方なら、内容に過度な期待はしないでください。
 + コンピュータサイエンス学科の人なら習ってるはず(?)
 + よろしくおねがいします。
 
 Press "n" to proceed
+
 Keyboard Help: [[http://guicho271828.github.io/another-org-info/][another-org-info @ github]]
 
+書いた人: guicho2.71828 (浅井 政太郎)
+
+Special Thanks: Alex 福永 准教授
+
+場所: 東京大学駒場キャンパス内 (渋谷の近く!)
+
+研究室HP: http://metahack.org/
 #+END_CENTER
 #+END_outline-text-1
 
-* 
+* まえがき
 
 この記事は今M1の自分の研究内容の紹介みたいなものです。
 しかも自分はこの分野に入ってまだ半年ぐらい。
@@ -50,10 +55,13 @@ Keyboard Help: [[http://guicho271828.github.io/another-org-info/][another-org-in
 quicklispが出てきたから^* ですかね。
 
 #+BEGIN_NOTE
-(*) なお自分が大学一年の時(2009)は、まだasdf-installしかありませんでした。
+(*) なお自分が大学一年の時(2009)は、
+まだasdf-installしかありませんでした。
+まあでも、他の人に比べれば、
+この時期にlispを始めた自分は幸運だなあ。
 #+END_NOTE
 
-* 
+* 本命
 
 #+BEGIN_XLARGE
 でも とはいえ
@@ -62,14 +70,21 @@ Lisp の本命は人工知能です。
 #+END_CENTER
 #+END_XLARGE
 
+というわけで、今日のお話は、webやなんやらで使える話ではなく、
+人工知能の分野、そして人工知能とlispがいかに関わってきたのかを
+ *とても軽く* 、
+そしてプランニングという一分野をまたも *とても軽く* 紹介してみたいと思います。
+
+
+
+* Lisp の はじまり
+
 人工知能の分野は1960年あたりにできた
 まだ始まって50年ちょっとの若い分野です。
 
 できたばかりの人工知能の分野の中心で、
 Lisp は John McCarthyによって考えだされ、
 また Guy L. Steele, Jr によって生みだされたのでした。
-
-* Lisp の はじまり
 
 #+BEGIN_CENTER
 AI Memo 8
@@ -79,22 +94,41 @@ McCarthy, J.
 /Communications of the ACM/, 1959
 #+END_CENTER
 
-時代背景:
+McCarthyによって /S-expression/ という考え方が初めて紹介された論文が
+これです。
+
+** 時代背景
+
+重要な時代背景として、以下のことを念頭に置いてください。
 
 1. プログラムはパンチカード式
 2. FORTRAN 登場は 1956年 ALGOL 登場は 1958年
 3. 「リスト構造」の発明 1957年
 4. 計算資源に触れることができた人間は全世界でもひとにぎり
+5. 「人工知能」という話をすると、神学者とかに反論された
+   - 人間が知能を作るなどおこがましい！みたいな意見があったらしいです
 
-* 人工知能: 前日譚
+いやはや、今とは全然違う時代です。
+コンピュータが弾道計算、暗号解読のためにあった時代です。
+そんな時代に人工知能をやりはじめたのです。
 
-その経緯は以下に詳しい。(読むか、あるいは、福永研のゼミに参加するという手もあります)
+#+BEGIN_CENTER
+注：以下の内容は福永研のゼミに出れば聞くことができるかもしれません。
+#+END_CENTER
+
+** 人工知能: 前日譚
+
+Lisp誕生および人工知能誕生前後の経緯は以下に詳しい。
+(読むか、あるいは、福永研のゼミに参加するという手もあります)
 
 #+BEGIN_CENTER
 McCarthy,J.  [[http://scholar.google.co.jp/scholar?q%3DHistory%2Bof%2BLisp%2BJ%2BMcCarthy&btnG%3D&hl%3Den&as_sdt%3D0%252C5][History of Lisp]] 1978
 #+END_CENTER
 
+#+BEGIN_SMALLER
 読めばわかります。(あるいは、ゼミに(略))
+(福永研は、外部からの院生、博士号を取りたい社会人などを大歓迎します)
+#+END_SMALLER
 
 #+BEGIN_CENTER
 1959年, the Dartmouse Summer Research Project on Artificial Intelligence
@@ -118,17 +152,24 @@ McCarthy,J.  [[http://scholar.google.co.jp/scholar?q%3DHistory%2Bof%2BLisp%2BJ%2
 *) A Newell, JC Shaw, HA Simon /Empirical explorations of the logic theory machine: a case study in heuristic/ 1956
 #+END_NOTE
 
-* Simon, Newell, Shaw: Logic Theory Machine
+** Simon, Newell, Shaw: Logic Theory Machine
 
-５つの演算子 /Connective/
+Logic Thery Machine (LT) は、 *世界初の自動定理証明機* です。
+まずLT は、入力として定理をとります。
+次に、5つの公理に対して繰り返し推論規則を適用して、その定理までたどり着きます。
+最後に、入力に対する証明を結果として返します。
 
-: not, or, implies, and, 
+このプログラムの中で、定理は以下の
+4つの演算子 /Connective/ をもちいて表現されます。
 
-combined into more complicated expressions
+: not, or, implies, and
+
+これらは組み合わせると、複雑な定理を表現することができます。
 
 : (p implies not-p) implies not-p
 
-and there are 5 given axioms(公理) in /Principia Mathematica/
+そして、以下に上げるのが, /Principia Mathematica(数学原理)/ にある５つの公理です。
+LTは、これらを使って、数学原理のけっこうな数の定理を証明しました。
 
 : (p or p) implies p
 : p implies (q or p)
@@ -136,7 +177,10 @@ and there are 5 given axioms(公理) in /Principia Mathematica/
 : [p or (q or r)] implies [q or (p or r)]
 : (p implies q) implies [(r or p) implies (r or q)]
 
-* ３つの操作 substitution, replacement, detachment
+
+** ３つの操作 substitution, replacement, detachment
+
+推論規則は３つあります。
 
 1. substitution
 
@@ -156,63 +200,453 @@ or と implies をいれかえられる
 
 =A= と =A implies B= が定理(または公理)ならば =B= も定理
 
-Logic Theorist には、入力として「証明したい定理」を与えます。
 LTは、先程述べた５つの公理に"様々な順で"上の３つの操作を適用することを
 試します。入力として与えられた定理が求められれば、そこに至るまでに必要
 だった操作を "Print out" します。 /当時はディスプレイなんてなかったの
 で、本当に紙にプリントします。/ 
 
-* ヒューリスティクス
+** 論文の紹介(簡単に)
 
 この論文の貢献は、いろいろあると思いますがとにかく無茶苦茶すごくて、
 まず、「計算機は定理証明をできる」と示した(初めて?)のがスゴイ。
 /Principia Mathematica/ の結構な数の定理を、50年前のコンピュータで証明
 させています。
 
-しかも「定理証明はグラフ探索みたいなものだ！」とわかる。
+また、この問題によって、「定理証明はグラフ探索みたいなものだ！」
+ということがわかりました。
+それぞれのノードが今ある定理で、
+そこに推論規則を適用すれば、適用した規則に応じて複数の新たな定理ができます。
+適用の仕方が複数あるので、枝分かれが起こります。
 
-#+BEGIN_RIGHT
-[[img:lt.png]]
-#+END_RIGHT
+#+BEGIN_CENTER
+[[png:lt2]]
+#+END_CENTER
 
-さらに、そうしたら、「探索が進むに連れてノードの数が爆発する」ことを発
-見するわけです。
-これは、ノードごとに、適用できる定理の数が複数あるので、
-ノードの数が倍々でどんどん増えて行ってしまうからです。
+またその結果、「探索が進むに連れてノードの数が爆発する」ことを発見しました。
+これは、ノードごとに、適用できる定理の数が複数あり、
+結果ノードの数が倍々でどんどん増えて行ってしまうからです。
 
-#+BEGIN_RIGHT
-[[img:lt2]]
-#+END_RIGHT
+#+BEGIN_CENTER
+[[png:lt]]
+#+END_CENTER
+
+最後の貢献として、この爆発に対処するため、
+「目的の定理に一番早くたどり着く」ノードを優先的に選択する方法
+すなわち「ヒューリスティクス」という考え方を提唱しました。
+
+** 命題論理と一階述語論理
+
+先ほどのLogic Theorist の探索は、命題論理に基づいて行われました。
+つまり、関数が出てこない。
+一方で、ここより後では一階述語論理を使った話だけをします。
+一階述語論理は、 $\forall$ と $\exists$ を使えるような論理体系です。
+
+#+BEGIN_CONTAINER-FLUID
+#+BEGIN_ROW-FLUID
+#+BEGIN_SPAN6
+#+BEGIN_CENTER
+命題論理
+
+$A,B,C,D,P,Q,R,S\ldots$
+#+END_CENTER
+#+END_SPAN6
+#+BEGIN_SPAN6
+#+BEGIN_CENTER
+一階述語論理
+
+$\exists x; p_1(x), \forall y; p_2(y) \ldots$
+#+END_CENTER
+#+END_SPAN6
+#+END_ROW-FLUID
+#+END_CONTAINER-FLUID
+
+** 経緯
+
+正直、経緯はよく知りません。でも、まあ、結論から言えば、
+
+#+BEGIN_XLARGE
+
+一階述語論理を使うなら、リストだ!!!!
+
+#+BEGIN_CENTER
+(predicate x y z)
+#+END_CENTER
+
+#+END_XLARGE
+
+ということになったみたいですね。
+こういうことなんですよ、lispが使われるようになったのは(雑)。
+
+つまり、
+まずその時点でリスト構造は発見されていて、ゆえに配列を使うのは適切ではなかった。
+
+で、たまたまMcCarthyが、
+S式を使った再帰的な関数呼び出しの表現方法を思いつきました(雑)。
+さらに、evalの実装方法も考えつきました(雑)。
+evalがあれば、S-expressionを使って、
+再帰的な関数呼び出しの構造を表現できるから。
+
+McCarthyは「表現できる」と主張しただけで実装するつもりはなかったのですが、
+たまたまGuy Steele がその論文を読んで(弟子だった?)、
+しかも機械語で実装してしまいました(雑)。
+
+ほんとにたまたまだと思うんですが、
+結果その後の人工知能分野では基本的にlispが使われるようになったみたいです。
+
+#+BEGIN_CENTER
+- lispの話は終わり -
+#+END_CENTER
+
+* プランニングの紹介
+
+話のつなげ方を全く考えていなかったので、
+どうやっても唐突にならざるを得ませんが、
+自分のいまの研究分野である古典的プランニングについて軽く解説します。
+/はたしてこれがlispとどう関わるのか?/
 
 
-* 一階述語論理
-
-
-* 定理証明
-
-定理証明とは、
+まあ、まずは定理証明を振り返りましょう。定理証明は
 
 + 前提から
 + 公理を順に適用して行って
 + 結論を導く
 
-ことです。
+ことでした。これをもう少し広く考えたのがプランニング問題です。
 
-* プランニング と STRIPS表現
+プランニング問題では、
 
++ 初期状態から
++ 世界に対してアクションを順に適用して行って
++ ゴールまでたどり着く
+
+ということを、計算機に自動でやらせます。
+
+問題の困難さという点では、
+Logic Theorist に出てきた問題と同じ難しさがあります。
+つまり、ノードごとに、アクションの数だけ枝が倍々に増えるので、
+賢くノードを展開していかないとすぐにメモリが爆発します。
+
+** 例 : Blocks world
+
+人工知能の教科書に出てくる例、 /Blocks World/ とよばれる問題で説明します。
+
+プランニング問題のタスクは、
+左の /初期状態/ から、右の /ゴール状態/ まで /状態(State)/ を遷移させることです。
+
+/状態 (state)/ は、世界の状態を表しています。
+
+初期状態は $s_0$ や $I$ (Init), ゴールは $s^*$ や $G$ という記号を
+よく使います。 
+
+[[png:planning]]
+
+** プランニング
+
+状態を遷移させる行為が /アクション/ です。
+
+プログラムは、可能なアクションのセットを使って、
+ゴールまでにどのような操作を行えばよいか、
+あるいはそのような方法は存在しないかどうか、を探索して調べます。
+
+系で使用可能なアクションの集合のことを /アクション集合/ $\cal A$ と呼びます。
+
+Block World の場合、ロボットアームは、下にしめした４つと「放す」の操作が可能です。
+
+[[png:planning-robot]]
+
+#+BEGIN_SMALLER
+一方、定理証明の場合は３つでしたね。(substitute,replace,detach)
+#+END_SMALLER
+
+** 状態
+
+世界の状態というのは、 /命題(facts)/ あるいは /事実(proposition)/ の集合として表現されます。
+下の例では、 =(on A floor)= というのがひとつの命題ですね。
+一つの状態が３つの命題で構成されています。
+何個の命題で構成されるのかは、場合によって増減します。
+
+[[png:planning2]]
+
+#+BEGIN_NOTE
+より突っ込んだ話は /開世界仮説/ でググってください
+#+END_NOTE
+
+** オブジェクト
+
+それぞれの命題は、そのひな形である /述語(predicate)/ の引数に
+/オブジェクト (object)/ を代入したものです。
+二階以上の述語論理では、
+オブジェクトだけでなく関数も引数に取ることができますが、
+一階述語プランニングではそういったものは扱いません。
+(そのため、mapcarやreduce, everyやsomeは実装できません。)
+
+[[png:instantiation]]
+
+** アクション
+
+おっと、アクションについて解説していませんでした。
+アクションには、 /引数/ /前提条件(precondition)/  /効果(effect)/ とい
+う要素があります。
+
+#+BEGIN_EXAMPLE
+操作 「積み木 x をアームで持ち上げる」
+
+  変数     :  x
+  前提条件 : 「x の上には何も乗ってない」
+             「アームは何もつかんでいない」
+
+  効果     : 「アームは x をつか」むようになる
+             「x は テーブルの上」でなくなる
+             「x の上には何も乗ってない」でなくなる
+             「アームは何もつかんでいない」でなくなる
+#+END_EXAMPLE
+
+アクションは、前提条件が現在の状態の中で満たされていないと適用できません。
+
+効果は、アクションを適用した場合に、
+結果の状態の中に命題を追加したり削除したりします。
+
+適用の際には、 =x= に実際の値を代入して使います。
+
+効果は、２つに分けて /追加効果/ と /削除効果/ と呼ばれたりします。
+
+〜でなくなる、という内容の効果が削除効果です。
+
+** プラン
+
+得られた操作(アクション)の列のことを Plan $P$ と呼びます。
+できれば短いプランがほしいです。
+ただ、アクションにコストを与えることで、
+コスト最適なプランを探すという問題もあります。
+この観点からは、「短いプランを探す」問題は
+全アクションにコスト1を割り当てた問題になりますね。
+
+[[png:planning-what-to-find]]
+
+** これはなんでしょう？
+
+ナニコレ？？珍百景？？？(わざとらしい)
+
+#+BEGIN_SRC lisp
+  (:action pick-up
+   :parameters (?x)
+   :precondition (and (clear ?x) (ontable ?x) (handempty))
+   :effect
+   (and (not (ontable ?x))
+        (not (clear ?x))
+        (not (handempty))
+        (holding ?x)))
+#+END_SRC
 
 * PDDL
 
+さて、もう種明かししてしまったわけですが、
 
-* 探索
+#+BEGIN_XLARGE
+なんとこのプランニングの分野、
+#+BEGIN_CENTER
+標準的な入力仕様は S式
+#+END_CENTER
+#+BEGIN_ALIGNRIGHT
+です！
+#+END_ALIGNRIGHT
+#+END_XLARGE
+
+PDDL フォーマット (Planning Domain Description Language) と呼ばれます。
+バージョン3までありますがすべてS式。
+
+#+BEGIN_NOTE
+/Plan Constraints and Preferences in PDDL3/, 2005
+#+END_NOTE
+
+** ドメインファイル
+
+PDDLには２つの種類のファイルがあります。
+一つがdomain ファイル。もうひとつが problem fileです。
+どちらも =.pddl= という拡張子です。
+
+domain ファイルは以下のような見た目をしています。
+まさに =read= *しろと言わんばかりの* フォーマットですね。
+自分の研究では、
+これを読んでパースするライブラリを(もちろんcommon lispで)作って使っています。
+
+#+BEGIN_SRC lisp
+(define (domain BLOCKS)
+  (:requirements :strips)
+  (:predicates (on ?x ?y)    ;; <- 使える述語リスト
+	       (ontable ?x)
+	       (clear ?x)
+	       (handempty)
+	       (holding ?x))
+  (:action pick-up
+	     :parameters (?x)
+	     :precondition (and (clear ?x) (ontable ?x) (handempty))
+	     :effect
+	     (and (not (ontable ?x))
+		   (not (clear ?x))
+		   (not (handempty))
+		   (holding ?x)))
+  ...
+#+END_SRC
+
+** 問題ファイル
+
+もうひとつの /problem file/ はこんなものです。
+たいてい =p01.pddl= みたいな名前を付けられています。
+一つのドメインに対して複数の問題があって、
+基本的に、番号が上がるほどオブジェクトの数が多くなり、
+爆発しやすい難しい問題になります。
+
+#+BEGIN_SRC lisp
+(define (problem BLOCKS-12-0)
+  (:domain BLOCKS)
+  (:objects I D B E K G A F C J L H )
+  (:INIT (CLEAR H) (CLEAR L) (CLEAR J)
+         (ONTABLE C) (ONTABLE F) (ONTABLE J)
+         (ON H A) (ON A G) (ON G K) (ON K E)
+         (ON E B) (ON B D) (ON D I) (ON I C)
+         (ON L F) (HANDEMPTY))
+  (:goal (AND (ON I C) (ON C B) (ON B L)
+              (ON L D) (ON D J) (ON J E) (ON E K)
+              (ON K F) (ON F A) (ON A H) (ON H G))))
+#+END_SRC
+
+** バージョン
+
+PDDLには複数のバージョンがありますが、
+どれも下位互換性をある程度保っています。
+途中のバージョンでは、
+型を扱えるようになったり、
+数値を扱えるようになったり、
+=:axiom= という概念を使えるようになったりします。
+
+#+BEGIN_SRC lisp
+  (:action do-immersion-varnish
+   :parameters (?x - part ;; <- 型 part
+                ?m - immersion-varnisher 
+                ?newcolour - acolour
+                ?surface - surface)
+   :precondition (and
+                  (idle ?m)
+                  (available ?x)
+                  (has-colour ?m ?newcolour)
+                  (surface-condition ?x ?surface)
+                  (is-smooth ?surface)
+                  (treatment ?x untreated))
+   :effect (and
+            (increase (total-cost) 10) ;; <-- 数値
+            (not (idle ?m))
+            (not (available ?x))
+            (not (treatment ?x untreated))
+            (not (colour ?x natural))
+            (immersion-varnishing-now ?x ?m
+                      ?newcolour ?surface)))
+#+END_SRC
 
 
-* SPACE-Hard
+* プランニングの計算複雑性 : PSPACE-complete
 
-convert to SAT
+プランニング問題の計算複雑性は /PSPACE完全/ と呼ばれています。
+これは、任意のプランニング問題が *制約充足問題* (SAT問題) に変換できること、
+および SAT問題が [[http://en.wikipedia.org/wiki/PSPACE][PSPACE完全]] であることから導かれます。
 
-* プログラム例
+PSPACEとはどういうことかというと、
+問題サイズNに対して指数関数的にノードの数が増えるので、
+必要な探索空間(およびそれを記憶するのに必要なメモリ)が、
+ *最悪で* 指数的に増えるという事です。
 
+(*最悪で* 、ということは、短くする方法が無いわけではないわけです。
+ そのためのヒューリスティクス)
+
+* もっと知りたい人は
+
+#+BEGIN_XLARGE
+この鈍器を買ってね！
+
+#+BEGIN_CENTER
+[[jpg:ai-modern-approach]]
+#+END_CENTER
+#+END_XLARGE
+
+二万円ぐらいします。しかも最新版は未訳です。
+
+* プランナ
+
+このプランニング問題を解くプログラムは、一般に *プランナ* と呼ばれます。
+
+自分のプランナを書いてみたいという人は、下のページ*)を見てみてください。
 
 http://www4.ncsu.edu/~stamant/simple-planners/simple-planners.html
 
+さっき紹介した鈍器の中にもある GraphPlan アルゴリズムの実装や、
+計算量の話で現れたように 「プランニング問題をSATに変換して解く」
+プログラム例があります。
+
+また、Carnegie Mellon University は CMUCLでも知られていますが、
+そこの *AI repository* では =UCPOP= という /Partial Order Planner/ のソースが落ちています。
+(詳しくは鈍器を参照)
+
+http://www.cs.cmu.edu/afs/cs/project/ai-repository/ai/areas/planning/systems/0.html
+
+#+BEGIN_NOTE
+*)このページを教えてくださった福永先生に感謝します
+#+END_NOTE
+
+* こぼれ話
+
+そのほか、この分野の最新の話を。
+
+** International Plannning Competition
+
+数年に一度、 IPC と呼ばれるコンペがあります。
+決められた(事前には知らされていない)ドメインとその問題について、
+CPUやメモリ・探索時間を共通にした上で、
+どこまで難しい問題が解けるかどうかを競います。
+
+現状最強のプランナとして名を轟かせているのが、
+Malte Helmert 先生の [[http://www.fast-downward.org/][Fast Downward]] です。
+一番最近のIPCである IPC 2011で優勝しています。
+
+** Heuristic 関数
+
+プランニング問題の速さは、先程も書いたとおり大まかには
+ヒューリスティック探索の効率の良さによって決まります。
+近年になって(再)注目され始めたのが、A*探索ベースの前方探索プランナです。
+2000年ぐらいのIPCで現れた [[http://fai.cs.uni-saarland.de/hoffmann/ff.html][Fast Forward]] プランナというのがその事始めになりました。
+
+[[http://ja.wikipedia.org/wiki/A*][A*]] 探索なので、ヒューリスティック関数の質(とその関数の計算コスト)
+によって探索速度が変わってきます。
+FF のもつヒューリスティック関数は $h_{FF}$ とよばれ、
+今でも定期的に比較の対象になります。
+
+その後、理論的に関数の解析が行われ、
+いまでは $h^+$ (削除効果緩和ヒューリスティクス) を中心に
+ $h^{max}$ , $h^m$ , $h^{PDB}$ (Pattern Database Heuristics),
+Merge and Shrink heuristics といった数々の関数が作られてきています。
+「楽に計算できて」「よりよいヒューリスティック値を与える」関数が
+好まれます。
+
+そして、いま最強として知られている関数が、Landmark-Cut heuristics です。
+どうです、名前聞いただけでもかっこいいでしょう。そんなことないか。
+
+** 最後に
+
+これらの進歩のおかげで、
+今ではかなり大規模な問題でも解けるようになっています。
+ただ、残念な話ですが、これらのプランナは速度こそが一番の重要事項なので、
+実装はC++などに移ってきていますね。
+
+でも、プランナの外からメタに問題を操作したりするのなら、
+依然としてlispは最も優れたツールです。
+素早くプロトタイプして、短いサイクルで評価して、論文を出す。
+こういうのはlispの十八番です。
+
+というわけで最後に
+
+#+BEGIN_CENTER
+われこそはと思う大学生Lisperは 総合文化研究科 福永研究室に！
+
+われこそはとおもう社会人lisperも 共同研究は大歓迎！
+
+福永研究室 http://metahack.org/
+#+END_CENTER
