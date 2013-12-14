@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>一階述語論理ベースのプランニング と lisp</title>
-<!-- 2013-12-14 土 03:57 -->
+<!-- 2013-12-14 土 12:27 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Masataro Asai" />
@@ -260,11 +260,7 @@ quicklispが出てきたから<sup>*</sup> ですかね。
 </p>
 
 </div>
-</div>
-</div>
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> 本命</h2>
-<div class="outline-text-2" id="text-2">
+
 <div class="xlarge">
 <p>
 でも とはいえ
@@ -285,11 +281,9 @@ Lisp の本命は人工知能です。
 </p>
 </div>
 </div>
-
-
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Lisp の はじまり</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Lisp の はじまり</h2>
+<div class="outline-text-2" id="text-2">
 <p>
 人工知能の分野は1960年あたりにできた
 まだ始まって50年ちょっとの若い分野です。
@@ -319,9 +313,9 @@ McCarthyによって <i>S-expression</i> という考え方が初めて紹介さ
 </p>
 </div>
 
-<div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 時代背景</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 時代背景</h3>
+<div class="outline-text-3" id="text-2-1">
 <p>
 重要な時代背景として、以下のことを念頭に置いてください。
 </p>
@@ -353,12 +347,16 @@ McCarthyによって <i>S-expression</i> という考え方が初めて紹介さ
 <p>
 注：以下の内容は福永研のゼミに出れば聞くことができるかもしれません。
 </p>
+
+<p>
+(福永研は、外部からの院生、博士号を取りたい社会人などを大歓迎します)
+</p>
 </div>
 </div>
 </div>
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 人工知能: 前日譚</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 人工知能: 前日譚</h3>
+<div class="outline-text-3" id="text-2-2">
 <p>
 Lisp誕生および人工知能誕生前後の経緯は以下に詳しい。
 (読むか、あるいは、福永研のゼミに参加するという手もあります)
@@ -373,7 +371,6 @@ McCarthy,J.  <a href="http://scholar.google.co.jp/scholar?q%3DHistory%2Bof%2BLis
 <div class="smaller">
 <p>
 読めばわかります。(あるいは、ゼミに(略))
-(福永研は、外部からの院生、博士号を取りたい社会人などを大歓迎します)
 </p>
 
 </div>
@@ -404,6 +401,11 @@ McCarthy,J.  <a href="http://scholar.google.co.jp/scholar?q%3DHistory%2Bof%2BLis
 始めて提唱した論文でもあります。
 </p>
 
+<p>
+これらを背景に、McCarthyは、一階述語論理を用いて再帰的に関数を定義
+するための構文を定義する必要性、あるいは定義した場合の利便性に気づきました。
+</p>
+
 <div class="note">
 <p>
 *) A Newell, JC Shaw, HA Simon <i>Empirical explorations of the logic theory machine: a case study in heuristic</i> 1956
@@ -412,11 +414,16 @@ McCarthy,J.  <a href="http://scholar.google.co.jp/scholar?q%3DHistory%2Bof%2BLis
 </div>
 </div>
 </div>
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Simon, Newell, Shaw: Logic Theory Machine</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Simon, Newell, Shaw: Logic Theory Machine</h3>
+<div class="outline-text-3" id="text-2-3">
 <p>
-Logic Thery Machine (LT) は、 <b>世界初の自動定理証明機</b> です。
+話を続ける前に、のちの話の準備として <i>Logic Theorist</i> について
+話しておきたいと思います。
+</p>
+
+<p>
+<i>Logic Theorist</i> (LT,原文ではLogic Thery Machine) は、 <b>世界初の自動定理証明機</b> です。
 まずLT は、入力として定理をとります。
 次に、5つの公理に対して繰り返し推論規則を適用して、その定理までたどり着きます。
 最後に、入力に対する証明を結果として返します。
@@ -454,9 +461,9 @@ p implies (q or p)
 </div>
 </div>
 
-<div id="outline-container-sec-3-4" class="outline-3">
-<h3 id="sec-3-4"><span class="section-number-3">3.4</span> ３つの操作 substitution, replacement, detachment</h3>
-<div class="outline-text-3" id="text-3-4">
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> ３つの操作 substitution, replacement, detachment</h3>
+<div class="outline-text-3" id="text-2-4">
 <p>
 推論規則は３つあります。
 </p>
@@ -508,9 +515,9 @@ LTは、先程述べた５つの公理に"様々な順で"上の３つの操作�
 </p>
 </div>
 </div>
-<div id="outline-container-sec-3-5" class="outline-3">
-<h3 id="sec-3-5"><span class="section-number-3">3.5</span> 論文の紹介(簡単に)</h3>
-<div class="outline-text-3" id="text-3-5">
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> 論文の紹介(簡単に)</h3>
+<div class="outline-text-3" id="text-2-5">
 <p>
 この論文の貢献は、いろいろあると思いますがとにかく無茶苦茶すごくて、
 まず、「計算機は定理証明をできる」と示した(初めて?)のがスゴイ。
@@ -526,6 +533,15 @@ LTは、先程述べた５つの公理に"様々な順で"上の３つの操作�
 適用の仕方が複数あるので、枝分かれが起こります。
 </p>
 
+<div class="right">
+
+<div class="figure">
+<p><img src="img/lt.png" alt="lt.png" />
+</p>
+</div>
+
+</div>
+
 <div class="center">
 
 <div class="figure">
@@ -540,14 +556,6 @@ LTは、先程述べた５つの公理に"様々な順で"上の３つの操作�
 結果ノードの数が倍々でどんどん増えて行ってしまうからです。
 </p>
 
-<div class="center">
-
-<div class="figure">
-<p><img src="img/lt.png" alt="lt.png" />
-</p>
-</div>
-</div>
-
 <p>
 最後の貢献として、この爆発に対処するため、
 「目的の定理に一番早くたどり着く」ノードを優先的に選択する方法
@@ -555,14 +563,18 @@ LTは、先程述べた５つの公理に"様々な順で"上の３つの操作�
 </p>
 </div>
 </div>
-<div id="outline-container-sec-3-6" class="outline-3">
-<h3 id="sec-3-6"><span class="section-number-3">3.6</span> 命題論理と一階述語論理</h3>
-<div class="outline-text-3" id="text-3-6">
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> 命題論理と一階述語論理</h3>
+<div class="outline-text-3" id="text-2-6">
 <p>
 先ほどのLogic Theorist の探索は、命題論理に基づいて行われました。
 つまり、関数が出てこない。
-一方で、ここより後では一階述語論理を使った話だけをします。
+一方で、一階述語論理と呼ばれるものもあります。
 一階述語論理は、 \(\forall\) と \(\exists\) を使えるような論理体系です。
+表現能力が高いので、AI分野ではそれが研究の中心になっていきました。
+もっと高階の論理を使うことも考えられましたが、
+当時の演算能力では途方もないものだったため、
+とりあえず一階述語論理だけに絞ることにしようとしたのだと思います。
 </p>
 
 <div class="container-fluid">
@@ -597,9 +609,9 @@ LTは、先程述べた５つの公理に"様々な順で"上の３つの操作�
 </div>
 </div>
 </div>
-<div id="outline-container-sec-3-7" class="outline-3">
-<h3 id="sec-3-7"><span class="section-number-3">3.7</span> 経緯</h3>
-<div class="outline-text-3" id="text-3-7">
+<div id="outline-container-sec-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> 経緯</h3>
+<div class="outline-text-3" id="text-2-7">
 <p>
 正直、経緯はよく知りません。でも、まあ、結論から言えば、
 </p>
@@ -624,8 +636,8 @@ LTは、先程述べた５つの公理に"様々な順で"上の３つの操作�
 </div>
 
 <p>
-ということになったみたいですね。
-こういうことなんですよ、lispが使われるようになったのは(雑)。
+ということになったみたいなんですよね。
+ま、こういうことなんですよ、lispが使われるようになったのは(雑)。
 </p>
 
 <p>
@@ -634,7 +646,7 @@ LTは、先程述べた５つの公理に"様々な順で"上の３つの操作�
 </p>
 
 <p>
-で、たまたまMcCarthyが、
+で、 <b>たまたま</b> McCarthyが、
 S式を使った再帰的な関数呼び出しの表現方法を思いつきました(雑)。
 さらに、evalの実装方法も考えつきました(雑)。
 evalがあれば、S-expressionを使って、
@@ -643,8 +655,13 @@ evalがあれば、S-expressionを使って、
 
 <p>
 McCarthyは「表現できる」と主張しただけで実装するつもりはなかったのですが、
-たまたまGuy Steele がその論文を読んで(弟子だった?)、
+<b>たまたま</b> Guy Steele がその論文を読んで(弟子だった?)、
 しかも機械語で実装してしまいました(雑)。
+</p>
+
+<p>
+またまたついでに、実装していた IBM 704 には リスト操作が簡単にできるような
+機械語が <b>たまたま</b> 載っていたわけです。
 </p>
 
 <p>
@@ -653,17 +670,16 @@ McCarthyは「表現できる」と主張しただけで実装するつもりは
 </p>
 
 <div class="center">
-<ul class="org-ul">
-<li>lispの話は終わり -
-</li>
-</ul>
+<p>
+&#x2013; lispの話は終わり &#x2013;
+</p>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> プランニングの紹介</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> プランニングの紹介</h2>
+<div class="outline-text-2" id="text-3">
 <p>
 話のつなげ方を全く考えていなかったので、
 どうやっても唐突にならざるを得ませんが、
@@ -714,11 +730,12 @@ Logic Theorist に出てきた問題と同じ難しさがあります。
 </p>
 </div>
 
-<div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> 例 : Blocks world</h3>
-<div class="outline-text-3" id="text-4-1">
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 例 : Blocks world</h3>
+<div class="outline-text-3" id="text-3-1">
 <p>
-人工知能の教科書に出てくる例、 <i>Blocks World</i> とよばれる問題で説明します。
+人工知能の教科書に出てくる例、 <i>Blocks World</i> とよばれる問題を用いて、
+プランニング問題を説明します。
 </p>
 
 <p>
@@ -742,9 +759,9 @@ Logic Theorist に出てきた問題と同じ難しさがあります。
 </div>
 </div>
 </div>
-<div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> プランニング</h3>
-<div class="outline-text-3" id="text-4-2">
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> プランニング</h3>
+<div class="outline-text-3" id="text-3-2">
 <p>
 状態を遷移させる行為が <i>アクション</i> です。
 </p>
@@ -777,9 +794,9 @@ Block World の場合、ロボットアームは、下にしめした４つと�
 </div>
 </div>
 </div>
-<div id="outline-container-sec-4-3" class="outline-3">
-<h3 id="sec-4-3"><span class="section-number-3">4.3</span> 状態</h3>
-<div class="outline-text-3" id="text-4-3">
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> 状態</h3>
+<div class="outline-text-3" id="text-3-3">
 <p>
 世界の状態というのは、 <i>命題(facts)</i> あるいは <i>事実(proposition)</i> の集合として表現されます。
 下の例では、 <code>(on A floor)</code> というのがひとつの命題ですね。
@@ -801,9 +818,9 @@ Block World の場合、ロボットアームは、下にしめした４つと�
 </div>
 </div>
 </div>
-<div id="outline-container-sec-4-4" class="outline-3">
-<h3 id="sec-4-4"><span class="section-number-3">4.4</span> オブジェクト</h3>
-<div class="outline-text-3" id="text-4-4">
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> オブジェクト</h3>
+<div class="outline-text-3" id="text-3-4">
 <p>
 それぞれの命題は、そのひな形である <i>述語(predicate)</i> の引数に
 <i>オブジェクト (object)</i> を代入したものです。
@@ -820,9 +837,9 @@ Block World の場合、ロボットアームは、下にしめした４つと�
 </div>
 </div>
 </div>
-<div id="outline-container-sec-4-5" class="outline-3">
-<h3 id="sec-4-5"><span class="section-number-3">4.5</span> アクション</h3>
-<div class="outline-text-3" id="text-4-5">
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> アクション</h3>
+<div class="outline-text-3" id="text-3-5">
 <p>
 おっと、アクションについて解説していませんでした。
 アクションには、 <i>引数</i> <i>前提条件(precondition)</i>  <i>効果(effect)</i> とい
@@ -864,9 +881,9 @@ Block World の場合、ロボットアームは、下にしめした４つと�
 </p>
 </div>
 </div>
-<div id="outline-container-sec-4-6" class="outline-3">
-<h3 id="sec-4-6"><span class="section-number-3">4.6</span> プラン</h3>
-<div class="outline-text-3" id="text-4-6">
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> プラン</h3>
+<div class="outline-text-3" id="text-3-6">
 <p>
 得られた操作(アクション)の列のことを Plan \(P\) と呼びます。
 できれば短いプランがほしいです。
@@ -883,9 +900,9 @@ Block World の場合、ロボットアームは、下にしめした４つと�
 </div>
 </div>
 </div>
-<div id="outline-container-sec-4-7" class="outline-3">
-<h3 id="sec-4-7"><span class="section-number-3">4.7</span> これはなんでしょう？</h3>
-<div class="outline-text-3" id="text-4-7">
+<div id="outline-container-sec-3-7" class="outline-3">
+<h3 id="sec-3-7"><span class="section-number-3">3.7</span> これはなんでしょう？</h3>
+<div class="outline-text-3" id="text-3-7">
 <p>
 ナニコレ？？珍百景？？？(わざとらしい)
 </p>
@@ -905,9 +922,9 @@ Block World の場合、ロボットアームは、下にしめした４つと�
 </div>
 </div>
 </div>
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> PDDL</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> PDDL</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 さて、もう種明かししてしまったわけですが、
 </p>
@@ -943,9 +960,9 @@ PDDL フォーマット (Planning Domain Description Language) と呼ばれま�
 </div>
 </div>
 
-<div id="outline-container-sec-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> ドメインファイル</h3>
-<div class="outline-text-3" id="text-5-1">
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> ドメインファイル</h3>
+<div class="outline-text-3" id="text-4-1">
 <p>
 PDDLには２つの種類のファイルがあります。
 一つがdomain ファイル。もうひとつが problem fileです。
@@ -981,9 +998,9 @@ domain ファイルは以下のような見た目をしています。
 </div>
 </div>
 </div>
-<div id="outline-container-sec-5-2" class="outline-3">
-<h3 id="sec-5-2"><span class="section-number-3">5.2</span> 問題ファイル</h3>
-<div class="outline-text-3" id="text-5-2">
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> 問題ファイル</h3>
+<div class="outline-text-3" id="text-4-2">
 <p>
 もうひとつの <i>problem file</i> はこんなものです。
 たいてい <code>p01.pddl</code> みたいな名前を付けられています。
@@ -1009,9 +1026,9 @@ domain ファイルは以下のような見た目をしています。
 </div>
 </div>
 </div>
-<div id="outline-container-sec-5-3" class="outline-3">
-<h3 id="sec-5-3"><span class="section-number-3">5.3</span> バージョン</h3>
-<div class="outline-text-3" id="text-5-3">
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> バージョン</h3>
+<div class="outline-text-3" id="text-4-3">
 <p>
 PDDLには複数のバージョンがありますが、
 どれも下位互換性をある程度保っています。
@@ -1049,9 +1066,9 @@ PDDLには複数のバージョンがありますが、
 </div>
 </div>
 
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> プランニングの計算複雑性 : PSPACE-complete</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> プランニングの計算複雑性 : PSPACE-complete</h2>
+<div class="outline-text-2" id="text-5">
 <p>
 プランニング問題の計算複雑性は <i>PSPACE完全</i> と呼ばれています。
 これは、任意のプランニング問題が <b>制約充足問題</b> (SAT問題) に変換できること、
@@ -1071,13 +1088,15 @@ PSPACEとはどういうことかというと、
 </p>
 </div>
 </div>
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> もっと知りたい人は</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> もっと知りたい人は</h2>
+<div class="outline-text-2" id="text-6">
 <div class="xlarge">
+<div class="center">
 <p>
 この鈍器を買ってね！
 </p>
+</div>
 
 <div class="center">
 
@@ -1092,17 +1111,26 @@ PSPACEとはどういうことかというと、
 <p>
 二万円ぐらいします。しかも最新版は未訳です。
 </p>
+
+<div class="note">
+<p>
+Artificial Intelligence: Modern Approach 3rd edition
+邦訳二版は「エージェントアプローチ人工知能 第二版」。
+なんでそんな訳になったし
+</p>
+
 </div>
 </div>
-<div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> プランナ</h2>
-<div class="outline-text-2" id="text-8">
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> プランナ</h2>
+<div class="outline-text-2" id="text-7">
 <p>
 このプランニング問題を解くプログラムは、一般に <b>プランナ</b> と呼ばれます。
 </p>
 
 <p>
-自分のプランナを書いてみたいという人は、下のページ*)を見てみてください。
+自分のプランナを書いてみたいという人は、下のページ<sup>*</sup> を見てみてください。
 </p>
 
 <p>
@@ -1127,23 +1155,74 @@ PSPACEとはどういうことかというと、
 
 <div class="note">
 <p>
-*)このページを教えてくださった福永先生に感謝します
+(*)このページを教えてくださった福永先生に感謝します。
 </p>
 
 </div>
 </div>
 </div>
-<div id="outline-container-sec-9" class="outline-2">
-<h2 id="sec-9"><span class="section-number-2">9</span> こぼれ話</h2>
-<div class="outline-text-2" id="text-9">
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> こぼれ話</h2>
+<div class="outline-text-2" id="text-8">
 <p>
-そのほか、この分野の最新の話を。
+そのほか、AI分野とlispにまつわる話や、最新の話を。
 </p>
 </div>
 
-<div id="outline-container-sec-9-1" class="outline-3">
-<h3 id="sec-9-1"><span class="section-number-3">9.1</span> International Plannning Competition</h3>
-<div class="outline-text-3" id="text-9-1">
+<div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> NASAの宇宙探査機にはCommon Lispが乗っている</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+宇宙探査機は、一回の通信のために長い時間がかかるので、
+通信と通信の間を完全に自律して行動しなくてはなりません。
+こういった場合、ロボットにプランニングに基づいて
+自律行動させることが必須になります。
+</p>
+
+<p>
+どうやらNASA JPL (Jet Propulsion Laboratory) はそれ関連でずっとLispを
+使っているらしく、
+プログラムのアップロードにはAllegro CLのREPLで関数を再定義する感じで
+行なっているそうです。
+</p>
+
+<p>
+それにたしか、衛星などのメモリはそこまで潤沢ではなく(宇宙線対策などで安全性重視)、
+プログラム全部積みで打ち上げるのは無茶だ、みたいな話を聞きました。
+また、打ち上げ期日は惑星の位置などに厳密に決められてしまうので、
+開発が間に合わなかったらプログラムはあとで送るしか無いわけです。
+そもそも追加ミッションなども必要ですから。
+</p>
+
+<p>
+こういった機能は、Common Lispぐらい動的なシステムでしか実現できません。
+</p>
+
+<p>
+まあ、いろいろと伝聞口調で申し訳ありません。よく知らないので。
+福永先生からFollow up がはいるかも。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-8-2" class="outline-3">
+<h3 id="sec-8-2"><span class="section-number-3">8.2</span> 天体望遠鏡にもプランナが乗っている</h3>
+<div class="outline-text-3" id="text-8-2">
+<p>
+ハッブル望遠鏡には <a href="http://www.stsci.edu/institute/software_hardware/spike/">SPIKE</a> とよばれるプランナが乗っています。
+望遠鏡には、無数の天文学者から、
+バラバラに複数の観測目標のリクエストが送られてきます。
+しかし、宇宙空間に居る望遠鏡は、姿勢を変えるのに非常に時間がかかります。
+そこで、プランニングを用いて望遠鏡のアクション数を最適化することが重要になります。
+</p>
+
+<p>
+なおこの内容は <del>鈍器</del> 例の教科書に乗っています(^^;)
+</p>
+</div>
+</div>
+<div id="outline-container-sec-8-3" class="outline-3">
+<h3 id="sec-8-3"><span class="section-number-3">8.3</span> International Plannning Competition</h3>
+<div class="outline-text-3" id="text-8-3">
 <p>
 数年に一度、 IPC と呼ばれるコンペがあります。
 決められた(事前には知らされていない)ドメインとその問題について、
@@ -1158,9 +1237,9 @@ Malte Helmert 先生の <a href="http://www.fast-downward.org/">Fast Downward</a
 </p>
 </div>
 </div>
-<div id="outline-container-sec-9-2" class="outline-3">
-<h3 id="sec-9-2"><span class="section-number-3">9.2</span> Heuristic 関数</h3>
-<div class="outline-text-3" id="text-9-2">
+<div id="outline-container-sec-8-4" class="outline-3">
+<h3 id="sec-8-4"><span class="section-number-3">8.4</span> Heuristic 関数</h3>
+<div class="outline-text-3" id="text-8-4">
 <p>
 プランニング問題の速さは、先程も書いたとおり大まかには
 ヒューリスティック探索の効率の良さによって決まります。
@@ -1185,19 +1264,31 @@ Merge and Shrink heuristics といった数々の関数が作られてきてい�
 </p>
 
 <p>
-そして、いま最強として知られている関数が、Landmark-Cut heuristics です。
+そして、いま最強として知られている関数が、Landmark-Cut heuristics \(h^{LM_{cut}}\) です。
 どうです、名前聞いただけでもかっこいいでしょう。そんなことないか。
 </p>
+
+<div class="note">
+<p>
+なお、ここに示した内容の後半は、 <b>鈍器の邦訳には載っていません!</b>
+第三版が訳されていないからです。英語版を読みましょう!
+</p>
+
 </div>
 </div>
-<div id="outline-container-sec-9-3" class="outline-3">
-<h3 id="sec-9-3"><span class="section-number-3">9.3</span> 最後に</h3>
-<div class="outline-text-3" id="text-9-3">
+</div>
+<div id="outline-container-sec-8-5" class="outline-3">
+<h3 id="sec-8-5"><span class="section-number-3">8.5</span> 最後に</h3>
+<div class="outline-text-3" id="text-8-5">
 <p>
 これらの進歩のおかげで、
-今ではかなり大規模な問題でも解けるようになっています。
-ただ、残念な話ですが、これらのプランナは速度こそが一番の重要事項なので、
-実装はC++などに移ってきていますね。
+今のプランナは かなり大規模な問題でも解けるようになっています。
+</p>
+
+<p>
+残念な話としては、
+速度こそが一番の重要事項であるこれらのプランナの実装は、
+昔はCLもあったのですが、今はC++などに移ってきています。
 </p>
 
 <p>
@@ -1217,7 +1308,7 @@ Merge and Shrink heuristics といった数々の関数が作られてきてい�
 </p>
 
 <p>
-われこそはとおもう社会人lisperも 共同研究は大歓迎！
+われこそはとおもう社会人Lisperも 共同研究 大歓迎！
 </p>
 
 <p>
@@ -1230,8 +1321,8 @@ Merge and Shrink heuristics といった数々の関数が作られてきてい�
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Masataro Asai</p>
-<p class="date">Created: 2013-12-14 土 03:57</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 23.3.1 (<a href="http://orgmode.org">Org</a> mode 8.1.1)</p>
+<p class="date">Created: 2013-12-14 土 12:27</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 23.4.1 (<a href="http://orgmode.org">Org</a> mode 8.1.1)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
