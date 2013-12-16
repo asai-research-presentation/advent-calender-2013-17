@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>一階述語論理ベースのプランニング と lisp</title>
-<!-- 2013-12-17 火 02:28 -->
+<!-- 2013-12-17 火 02:55 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Masataro Asai" />
@@ -581,10 +581,15 @@ LTは、先程述べた５つの公理に"様々な順で"上の３つの操作�
 つまり、関数が出てこない。
 一方で、一階述語論理と呼ばれるものもあります。
 一階述語論理は、 \(\forall\) と \(\exists\) を使えるような論理体系です。
-表現能力が高いので、AI分野ではそれが研究の中心になっていきました。
+</p>
+
+<p>
+命題論理よりは表現能力が高いので、AI分野ではそれが研究の中心になっていきました。
 もっと高階の論理を使うことも考えられましたが、
+そもそも効率的な探索理論が確立していないうえ、
 当時の演算能力では途方もないものだったため、
-とりあえず一階述語論理だけに絞ることにしようとしたのだと思います。
+とりあえず一階述語論理だけに絞ることにしようとしたのでしょう。
+(現代でも、高階論理の探索手法は一階述語論理と比べると全然進んでいないらしい。)
 </p>
 
 <div class="container-fluid">
@@ -1041,6 +1046,8 @@ PDDLには複数のバージョンがありますが、
 型を扱えるようになったり、
 数値を扱えるようになったり、
 <code>:axiom</code> という概念を使えるようになったりします。
+数値を扱うときは、
+目的の最大化・最小化プランを探索できるプランナもいます。
 </p>
 
 <div class="org-src-container">
@@ -1062,14 +1069,13 @@ PDDLには複数のバージョンがありますが、
           (not (idle ?m))
           (not (available ?x))
           (not (treatment ?x untreated))
-          (not (colour ?x natural))
-          (immersion-varnishing-now ?x ?m
-                    ?newcolour ?surface)))
+          (not (colour ?x natural))))
 </pre>
 </div>
 </div>
 </div>
 </div>
+
 
 <div id="outline-container-sec-5" class="outline-2">
 <h2 id="sec-5"><span class="section-number-2">5</span> プランニングの計算複雑性 : PSPACE-complete</h2>
@@ -1131,18 +1137,20 @@ Artificial Intelligence: Modern Approach 3rd edition
 <h3 id="sec-6-1"><span class="section-number-3">6.1</span> プランニングの教材としては</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
-この教科書が新しくて良いらしいです。
+この教科書が新しくて良いらしいです。(福永先生情報)
 </p>
 
 <div class="center">
 <p>
-Geffener Bonet,
-<i><a href="http://scholar.google.co.jp/scholar?hl%3Den&q%3DA%2BConcise%2BIntroduction%2Bto%2BModels%2Band%2BMethods%2Bfor%2BAutomated%2BPlanning&btnG%3D&as_sdt%3D1%252C5&as_sdtp%3D">A Concise Introduction to Models and Methods for Automated Planning</a></i>
+Geffener Bonet, 2013
+<a href="https://www.google.co.jp/search?q%3DA%2BConcise%2BIntroduction%2Bto%2BModels%2Band%2BMethods%2Bfor%2BAutomated%2BPlanning">A Concise Introduction to Models and Methods for Automated Planning</a>
 </p>
-<ul class="org-ul">
-<li>2013
-</li>
-</ul>
+
+
+
+<p>
+共同研究すれば読めるように(略)
+</p>
 </div>
 </div>
 </div>
@@ -1155,7 +1163,7 @@ Geffener Bonet,
 </p>
 
 <p>
-自分のプランナを書いてみたいという人は、下のページ<sup>*</sup> を見てみてください。
+自分のプランナを書いてみたいという人は、下のページ<sup>*</sup> を見てみてください(福永先生情報)。
 さっき紹介した鈍器の中にもある GraphPlan アルゴリズムの実装や、
 計算量の話で現れたように 「プランニング問題をSATに変換して解く」
 プログラム例があります。
@@ -1168,7 +1176,7 @@ Geffener Bonet,
 <p>
 ここに示されたプログラム例は、効率こそそこまでよくありませんが、
 理解しやすくなるように実装されています。
-PAIP よりも後に出版されたため、PAIPを読んだ人にも役立つはずです(福永先生談)
+PAIP よりも後に出た知識で実装されているため、PAIPを読んだ人にも役立つはずです(福永先生談)
 </p>
 
 
@@ -1186,13 +1194,6 @@ PAIP よりも後に出版されたため、PAIPを読んだ人にも役立つ�
 <i>先生によるFollow up:</i> UCPOPは、複雑であるために理解する教材とは適さず、
 またヒューリスティクスを使っていないのでむちゃくちゃ遅いとのこと。
 </p>
-
-<div class="note">
-<p>
-(*)このページを教えてくださった福永先生に感謝します。
-</p>
-
-</div>
 </div>
 </div>
 <div id="outline-container-sec-8" class="outline-2">
@@ -1204,7 +1205,7 @@ PAIP よりも後に出版されたため、PAIPを読んだ人にも役立つ�
 </div>
 
 <div id="outline-container-sec-8-1" class="outline-3">
-<h3 id="sec-8-1"><span class="section-number-3">8.1</span> NASAの宇宙探査機にはCommon Lispが乗っている</h3>
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> NASAの宇宙探査機にはCommon Lispが乗っていた</h3>
 <div class="outline-text-3" id="text-8-1">
 <p>
 宇宙探査機は、一回の通信のために長い時間がかかるので、
@@ -1216,11 +1217,11 @@ PAIP よりも後に出版されたため、PAIPを読んだ人にも役立つ�
 <p>
 どうやらNASA JPL (Jet Propulsion Laboratory) はそれ関連で
 <a href="http://www.flownet.com/gat/jpl-lisp.html">1999年ぐらいまでLispを使っていた</a> らしいです。
-Deep Space One には、<a href="http://ti.arc.nasa.gov/tech/asr/planning-and-scheduling/remote-agent/experiment/">Remote Agent</a> とよばれるlisp製のプログラムが乗っていたそうです。
+Deep Space One には、<a href="http://ti.arc.nasa.gov/tech/asr/planning-and-scheduling/remote-agent/experiment/">Remote Agent</a> とよばれるlisp製のプランナが乗っていました。
 </p>
 
 <p>
-まあ、いろいろと伝聞口調で申し訳ありません。よく知らないので。
+まあ、いろいろと伝聞ですが、申し訳ありません。よく知らないので。
 いまここにあるのは、福永先生からFollow up がはいった後の内容です。
 やはり、話は中に実際にいた人に聞くべきですね!
 </p>
@@ -1234,9 +1235,9 @@ Deep Space One には、<a href="http://ti.arc.nasa.gov/tech/asr/planning-and-sc
 望遠鏡には、無数の天文学者から、
 バラバラに複数の観測目標のリクエストが送られてきます。
 しかし、宇宙空間に居る望遠鏡は、姿勢を変えるのに非常に時間がかかります。
-そこで、プランニングを用いて望遠鏡のアクション数を最適化することが重要になります。
-プランナは地上のコンピュータで計算し、作ったプランを衛星に送ります。
-なおこの内容は例の教科書に乗っています。
+そこで、望遠鏡のアクション数を最適化することが重要になります。
+スケジューラは地上のコンピュータで計算し、作ったプランを衛星に送ります。
+(なおこの話は例の教科書に乗っています。)
 </p>
 
 <p>
@@ -1260,6 +1261,7 @@ CPUやメモリ・探索時間を共通にした上で、
 現状最強のプランナとして名を轟かせているのが、
 Malte Helmert 先生の <a href="http://www.fast-downward.org/">Fast Downward</a> です。
 一番最近のIPCである IPC 2011で優勝しています。
+こむつかしい論文を書く先生として研究室内で悪名高いです。
 </p>
 </div>
 </div>
@@ -1271,6 +1273,7 @@ Malte Helmert 先生の <a href="http://www.fast-downward.org/">Fast Downward</a
 ヒューリスティック探索の効率の良さによって決まります。
 近年になって(再)注目され始めたのが、A*探索ベースの前方探索プランナです。
 2000年ぐらいのIPCで現れた <a href="http://fai.cs.uni-saarland.de/hoffmann/ff.html">Fast Forward</a> プランナというのがその事始めになりました。
+(Fast Downwardとは別.)
 </p>
 
 <p>
@@ -1285,12 +1288,12 @@ FF のもつヒューリスティック関数は \(h_{FF}\) とよばれ、
 いまでは \(h^+\) (削除効果緩和ヒューリスティクス) を中心に
  \(h^{max}\) , \(h^m\) , \(h^{PDB}\) (Pattern Database Heuristics),
 Merge and Shrink heuristics といった数々の関数が作られてきています。
-「楽に計算できて」「よりよいヒューリスティック値を与える」関数が
-好まれます。
+「楽に計算できて」「よりよいヒューリスティック値を与える」関数が好まれます。
 </p>
 
 <p>
-そして、いま最強として知られている関数が、Landmark-Cut heuristics \(h^{LM_{cut}}\) です。
+そして、いま最強として知られている関数が、
+Fast Downward に乗っかっている Landmark-Cut heuristics \(h^{LM_{cut}}\) です。
 どうです、名前聞いただけでもかっこいいでしょう。そんなことないか。
 </p>
 
@@ -1315,7 +1318,6 @@ Merge and Shrink heuristics といった数々の関数が作られてきてい�
 そのかわり残念ながら、
 速度こそが一番の重要事項であるこれらのプランナの実装は、
 昔はCL製のものもあったものの、今はC++などに移ってきています。
-(JPLでもそうでしたね)
 </p>
 
 <p>
@@ -1348,7 +1350,7 @@ Merge and Shrink heuristics といった数々の関数が作られてきてい�
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Masataro Asai</p>
-<p class="date">Created: 2013-12-17 火 02:28</p>
+<p class="date">Created: 2013-12-17 火 02:55</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 23.3.1 (<a href="http://orgmode.org">Org</a> mode 8.1.1)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
