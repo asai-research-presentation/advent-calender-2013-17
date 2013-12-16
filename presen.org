@@ -159,7 +159,7 @@ McCarthy,J.  [[http://scholar.google.co.jp/scholar?q%3DHistory%2Bof%2BLisp%2BJ%2
 話を続ける前に、のちの話の準備として /Logic Theorist/ について
 話しておきたいと思います。
 
-/Logic Theorist/ (LT,原文ではLogic Theory Machine) は、 *世界初の自動定理証明機* です。
+/Logic Theorist/ (LT,原文ではLogic Theory Machine) は、 *世界初の自動定理証明機* です^*。
 まずLT は、入力として定理をとります。
 次に、5つの公理に対して繰り返し推論規則を適用して、その定理までたどり着きます。
 最後に、入力に対する証明を結果として返します。
@@ -182,6 +182,11 @@ LTは、これらを使って、数学原理のけっこうな数の定理を証
 : [p or (q or r)] implies [q or (p or r)]
 : (p implies q) implies [(r or p) implies (r or q)]
 
+#+BEGIN_NOTE
+うーん、じつは Martin Davis による Presburger's algorithm の実装(1954?)もあったそうなんですが、
+注目された論文が出ているのが1960年ですから、論文出てないなら無いのと同じ、という方向で。
+A computing procedure for quantification theory (Cited by 2762 @ Google Scholar)
+#+END_NOTE
 
 ** ３つの操作 substitution, replacement, detachment
 
