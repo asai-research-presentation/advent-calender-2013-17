@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>一階述語論理ベースのプランニング と lisp</title>
-<!-- 2013-12-14 土 12:27 -->
+<!-- 2013-12-17 火 02:06 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Masataro Asai" />
@@ -137,7 +137,7 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<script type="text/javascript" src="./mathjax.js"></script>
 <script type="text/javascript">
 <!--/*--><![CDATA[/*><!--*/
     MathJax.Hub.Config({
@@ -205,7 +205,7 @@ for the JavaScript code in this tag.
 </ul>
 
 <p>
-Press "n" to proceed
+Press "n" to proceed, "p" to move backward
 </p>
 
 <p>
@@ -217,7 +217,7 @@ Keyboard Help: <a href="http://guicho271828.github.io/another-org-info/">another
 </p>
 
 <p>
-Special Thanks: Alex 福永 准教授
+<b>Special Special Thanks:</b> Alex 福永 准教授
 </p>
 
 <p>
@@ -277,7 +277,9 @@ Lisp の本命は人工知能です。
 というわけで、今日のお話は、webやなんやらで使える話ではなく、
 人工知能の分野、そして人工知能とlispがいかに関わってきたのかを
  <b>とても軽く</b> 、
-そしてプランニングという一分野をまたも <b>とても軽く</b> 紹介してみたいと思います。
+そしてプランニングという一分野をまたも <b>とても軽く</b> 紹介してみたいと思
+います。
+ところどころ間違っているかもしれません。
 </p>
 </div>
 </div>
@@ -292,7 +294,7 @@ Lisp の本命は人工知能です。
 <p>
 できたばかりの人工知能の分野の中心で、
 Lisp は John McCarthyによって考えだされ、
-また Guy L. Steele, Jr によって生みだされたのでした。
+また Steve Russell によって生みだされたのでした。
 </p>
 
 <div class="center">
@@ -377,12 +379,12 @@ McCarthy,J.  <a href="http://scholar.google.co.jp/scholar?q%3DHistory%2Bof%2BLis
 
 <div class="center">
 <p>
-1959年, the Dartmouse Summer Research Project on Artificial Intelligence
+1959年, the Dartmouth Summer Research Project on Artificial Intelligence
 </p>
 </div>
 
 <p>
-通称Dartmouse会議。
+通称Dartmouth会議。
 このミーティングこそが、
 「人工知能」という分野(言葉?)が始めて誕生した瞬間です。
 </p>
@@ -423,7 +425,7 @@ McCarthy,J.  <a href="http://scholar.google.co.jp/scholar?q%3DHistory%2Bof%2BLis
 </p>
 
 <p>
-<i>Logic Theorist</i> (LT,原文ではLogic Thery Machine) は、 <b>世界初の自動定理証明機</b> です。
+<i>Logic Theorist</i> (LT,原文ではLogic Theory Machine) は、 <b>世界初の自動定理証明機</b> です。
 まずLT は、入力として定理をとります。
 次に、5つの公理に対して繰り返し推論規則を適用して、その定理までたどり着きます。
 最後に、入力に対する証明を結果として返します。
@@ -655,7 +657,12 @@ evalがあれば、S-expressionを使って、
 
 <p>
 McCarthyは「表現できる」と主張しただけで実装するつもりはなかったのですが、
-<b>たまたま</b> Guy Steele がその論文を読んで(弟子だった?)、
+</p>
+
+<p>
+LISP実装の作業をやらせるためにたまたま雇った大学生の一人 Steve Russell
+が <b>たまたま</b> その論文を読んで、
+(M式ではなく) <b>S式のまま</b> プログラムをあつかうevalを、
 しかも機械語で実装してしまいました(雑)。
 </p>
 
@@ -740,16 +747,11 @@ Logic Theorist に出てきた問題と同じ難しさがあります。
 
 <p>
 プランニング問題のタスクは、
-左の <i>初期状態</i> から、右の <i>ゴール状態</i> まで <i>状態(State)</i> を遷移させることです。
-</p>
-
-<p>
+左の <i>初期状態</i> から、右の <i>ゴール状態</i> まで <i>状態(State)</i> を
+遷移させるための手段(プラン)を計算することです。
 <i>状態 (state)</i> は、世界の状態を表しています。
-</p>
-
-<p>
-初期状態は \(s_0\) や \(I\) (Init), ゴールは \(s^*\) や \(G\) という記号を
-よく使います。 
+初期状態には \(s_0\) や \(I\) (Init),
+ゴールには \(s^*\) や \(G\) という記号が好まれます。
 </p>
 
 
@@ -760,43 +762,8 @@ Logic Theorist に出てきた問題と同じ難しさがあります。
 </div>
 </div>
 <div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> プランニング</h3>
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 状態</h3>
 <div class="outline-text-3" id="text-3-2">
-<p>
-状態を遷移させる行為が <i>アクション</i> です。
-</p>
-
-<p>
-プログラムは、可能なアクションのセットを使って、
-ゴールまでにどのような操作を行えばよいか、
-あるいはそのような方法は存在しないかどうか、を探索して調べます。
-</p>
-
-<p>
-系で使用可能なアクションの集合のことを <i>アクション集合</i> \(\cal A\) と呼びます。
-</p>
-
-<p>
-Block World の場合、ロボットアームは、下にしめした４つと「放す」の操作が可能です。
-</p>
-
-
-<div class="figure">
-<p><img src="img/planning-robot.png" alt="planning-robot.png" />
-</p>
-</div>
-
-<div class="smaller">
-<p>
-一方、定理証明の場合は３つでしたね。(substitute,replace,detach)
-</p>
-
-</div>
-</div>
-</div>
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> 状態</h3>
-<div class="outline-text-3" id="text-3-3">
 <p>
 世界の状態というのは、 <i>命題(facts)</i> あるいは <i>事実(proposition)</i> の集合として表現されます。
 下の例では、 <code>(on A floor)</code> というのがひとつの命題ですね。
@@ -818,9 +785,9 @@ Block World の場合、ロボットアームは、下にしめした４つと�
 </div>
 </div>
 </div>
-<div id="outline-container-sec-3-4" class="outline-3">
-<h3 id="sec-3-4"><span class="section-number-3">3.4</span> オブジェクト</h3>
-<div class="outline-text-3" id="text-3-4">
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> オブジェクト</h3>
+<div class="outline-text-3" id="text-3-3">
 <p>
 それぞれの命題は、そのひな形である <i>述語(predicate)</i> の引数に
 <i>オブジェクト (object)</i> を代入したものです。
@@ -837,19 +804,49 @@ Block World の場合、ロボットアームは、下にしめした４つと�
 </div>
 </div>
 </div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> アクション</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+状態を遷移させる行為が <i>アクション</i> です。
+プログラムは、可能なアクションのセットを使って、
+ゴールまでにどのような操作を行えばよいか、
+あるいはそのような方法は存在しないかどうか、を探索して調べます。
+アクションはオペレータと呼ばれることもあります。
+</p>
+
+<p>
+系で使用可能なアクションの集合のことを <i>アクション集合</i> \(\cal A\) と呼びます。
+例えばBlocks Worldの場合、
+ロボットアームは下にしめした４つと「放す」の操作が可能であり、
+アクション集合 \(\cal A\) は５つの要素の集合になります。
+</p>
+
+
+<div class="figure">
+<p><img src="img/planning-robot.png" alt="planning-robot.png" />
+</p>
+</div>
+
+<div class="smaller">
+<p>
+一方、定理証明の場合は３つでしたね。(substitute,replace,detach)
+</p>
+
+</div>
+</div>
+</div>
 <div id="outline-container-sec-3-5" class="outline-3">
 <h3 id="sec-3-5"><span class="section-number-3">3.5</span> アクション</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
-おっと、アクションについて解説していませんでした。
-アクションには、 <i>引数</i> <i>前提条件(precondition)</i>  <i>効果(effect)</i> とい
-う要素があります。
+アクションには、 <i>引数</i> 、 <i>前提条件(precondition)</i> 、 <i>効果(effect)</i> という要素があります。
 </p>
 
 <pre class="example">
 操作 「積み木 x をアームで持ち上げる」
 
-  変数     :  x
+  引数     :  x
   前提条件 : 「x の上には何も乗ってない」
              「アームは何もつかんでいない」
 
@@ -869,7 +866,7 @@ Block World の場合、ロボットアームは、下にしめした４つと�
 </p>
 
 <p>
-適用の際には、 <code>x</code> に実際の値を代入して使います。
+適用の際には、引数である <code>x</code> に実際の値を代入して使います。
 </p>
 
 <p>
@@ -1121,6 +1118,26 @@ Artificial Intelligence: Modern Approach 3rd edition
 
 </div>
 </div>
+
+<div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> プランニングの教材としては</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+この教科書が新しくて良いらしいです。
+</p>
+
+<div class="center">
+<p>
+Geffener Bonet,
+<i><a href="http://scholar.google.co.jp/scholar?hl%3Den&q%3DA%2BConcise%2BIntroduction%2Bto%2BModels%2Band%2BMethods%2Bfor%2BAutomated%2BPlanning&btnG%3D&as_sdt%3D1%252C5&as_sdtp%3D">A Concise Introduction to Models and Methods for Automated Planning</a></i>
+</p>
+<ul class="org-ul">
+<li>2013
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 <div id="outline-container-sec-7" class="outline-2">
 <h2 id="sec-7"><span class="section-number-2">7</span> プランナ</h2>
@@ -1131,6 +1148,9 @@ Artificial Intelligence: Modern Approach 3rd edition
 
 <p>
 自分のプランナを書いてみたいという人は、下のページ<sup>*</sup> を見てみてください。
+さっき紹介した鈍器の中にもある GraphPlan アルゴリズムの実装や、
+計算量の話で現れたように 「プランニング問題をSATに変換して解く」
+プログラム例があります。
 </p>
 
 <p>
@@ -1138,10 +1158,11 @@ Artificial Intelligence: Modern Approach 3rd edition
 </p>
 
 <p>
-さっき紹介した鈍器の中にもある GraphPlan アルゴリズムの実装や、
-計算量の話で現れたように 「プランニング問題をSATに変換して解く」
-プログラム例があります。
+ここに示されたプログラム例は、効率こそそこまでよくありませんが、
+理解しやすくなるように実装されています。
+PAIP よりも後に出版されたため、PAIPを読んだ人にも役立つはずです(福永先生談)
 </p>
+
 
 <p>
 また、Carnegie Mellon University は CMUCLでも知られていますが、
@@ -1151,6 +1172,11 @@ Artificial Intelligence: Modern Approach 3rd edition
 
 <p>
 <a href="http://www.cs.cmu.edu/afs/cs/project/ai-repository/ai/areas/planning/systems/0.html">http://www.cs.cmu.edu/afs/cs/project/ai-repository/ai/areas/planning/systems/0.html</a>
+</p>
+
+<p>
+<i>先生によるFollow up:</i> UCPOPは、複雑であるために理解する教材とは適さず、
+またヒューリスティクスを使っていないのでむちゃくちゃ遅いとのこと。
 </p>
 
 <div class="note">
@@ -1180,43 +1206,35 @@ Artificial Intelligence: Modern Approach 3rd edition
 </p>
 
 <p>
-どうやらNASA JPL (Jet Propulsion Laboratory) はそれ関連でずっとLispを
-使っているらしく、
-プログラムのアップロードにはAllegro CLのREPLで関数を再定義する感じで
-行なっているそうです。
-</p>
-
-<p>
-それにたしか、衛星などのメモリはそこまで潤沢ではなく(宇宙線対策などで安全性重視)、
-プログラム全部積みで打ち上げるのは無茶だ、みたいな話を聞きました。
-また、打ち上げ期日は惑星の位置などに厳密に決められてしまうので、
-開発が間に合わなかったらプログラムはあとで送るしか無いわけです。
-そもそも追加ミッションなども必要ですから。
-</p>
-
-<p>
-こういった機能は、Common Lispぐらい動的なシステムでしか実現できません。
+どうやらNASA JPL (Jet Propulsion Laboratory) はそれ関連で
+<a href="http://www.flownet.com/gat/jpl-lisp.html">1999年ぐらいまでLispを使っていた</a> らしいです。
+Deep Space One には、<a href="http://ti.arc.nasa.gov/tech/asr/planning-and-scheduling/remote-agent/experiment/">Remote Agent</a> とよばれるlisp製のプログラムが乗っていたそうです。
 </p>
 
 <p>
 まあ、いろいろと伝聞口調で申し訳ありません。よく知らないので。
-福永先生からFollow up がはいるかも。
+いまここにあるのは、福永先生からFollow up がはいった後の内容です。
+やはり、話は中に実際にいた人に聞くべきですね!
 </p>
 </div>
 </div>
 <div id="outline-container-sec-8-2" class="outline-3">
-<h3 id="sec-8-2"><span class="section-number-3">8.2</span> 天体望遠鏡にもプランナが乗っている</h3>
+<h3 id="sec-8-2"><span class="section-number-3">8.2</span> ハッブル望遠鏡</h3>
 <div class="outline-text-3" id="text-8-2">
 <p>
-ハッブル望遠鏡には <a href="http://www.stsci.edu/institute/software_hardware/spike/">SPIKE</a> とよばれるプランナが乗っています。
+ハッブル望遠鏡の運用には <a href="http://www.stsci.edu/institute/software_hardware/spike/">SPIKE</a> とよばれるスケジューラが使われています。
 望遠鏡には、無数の天文学者から、
 バラバラに複数の観測目標のリクエストが送られてきます。
 しかし、宇宙空間に居る望遠鏡は、姿勢を変えるのに非常に時間がかかります。
 そこで、プランニングを用いて望遠鏡のアクション数を最適化することが重要になります。
+プランナは地上のコンピュータで計算し、作ったプランを衛星に送ります。
+なおこの内容は例の教科書に乗っています。
 </p>
 
 <p>
-なおこの内容は <del>鈍器</del> 例の教科書に乗っています(^^;)
+スケジューリングはプランニングと関連した分野です。
+SPIKEは衛星運用に特化したプログラムですが、
+一般には Temporal Planning (scheduling) という、広い範囲の問題を扱える分野があります。
 </p>
 </div>
 </div>
@@ -1286,14 +1304,15 @@ Merge and Shrink heuristics といった数々の関数が作られてきてい�
 </p>
 
 <p>
-残念な話としては、
+そのかわり残念ながら、
 速度こそが一番の重要事項であるこれらのプランナの実装は、
-昔はCLもあったのですが、今はC++などに移ってきています。
+昔はCL製のものもあったものの、今はC++などに移ってきています。
+(JPLでもそうでしたね)
 </p>
 
 <p>
-でも、プランナの外からメタに問題を操作したりするのなら、
-依然としてlispは最も優れたツールです。
+しかし、プランナの外からメタに問題を操作したりするのなら、
+依然としてlispは優れたツールです。
 素早くプロトタイプして、短いサイクルで評価して、論文を出す。
 こういうのはlispの十八番です。
 </p>
@@ -1321,8 +1340,8 @@ Merge and Shrink heuristics といった数々の関数が作られてきてい�
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Masataro Asai</p>
-<p class="date">Created: 2013-12-14 土 12:27</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 23.4.1 (<a href="http://orgmode.org">Org</a> mode 8.1.1)</p>
+<p class="date">Created: 2013-12-17 火 02:06</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 23.3.1 (<a href="http://orgmode.org">Org</a> mode 8.1.1)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
