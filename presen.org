@@ -5,7 +5,7 @@
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:nil pri:nil tags:not-in-toc skip:nil
 #+infojs_opt: view:nil path:./org-info.js toc:nil ltoc:nil ftoc:nil
 #+infojs_opt: mouse:#eeeeee buttons:nil
-#+HTML_MATHJAX: path:"./mathjax.js"
+#+HTML_MATHJAX: path:"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="animation.css" />
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="colors-and-fonts.css" />
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
